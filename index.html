@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Digital Printing - Studio Desain Modern</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --secondary: #7C3AED;
+            --accent: #EC4899;
+            --gold: #F59E0B;
+            --dark: #0F172A;
+            --light: #F8FAFC;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Custom Classes */
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% auto;
+            animation: gradientFlow 3s ease infinite;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            background-size: 200% 200%;
+            animation: gradientFlow 5s ease infinite;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .animate-fadeInUp {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shine-effect::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            animation: shimmer 3s infinite;
+        }
+        
+        .stagger-item {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .image-hover-effect {
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .image-hover-effect:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+        
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.7s;
+        }
+        
+        .btn-glow:hover::before {
+            left: 100%;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+        }
+        
+        /* Grid Pattern */
+        .bg-grid-pattern {
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        /* 3D Card Effect */
+        .card-3d {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .card-3d-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .card-3d:hover .card-3d-inner {
+            transform: rotateY(10deg) rotateX(5deg);
+        }
+    </style>
+</head>
+<body class="relative overflow-x-hidden">
+
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style="animation-delay: 2s"></div>
+        <div class="absolute top-3/4 left-1/3 w-64 h-64 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style="animation-delay: 4s"></div>
+    </div>
+
+    <nav class="glass-card fixed w-full z-50 py-4 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-3 group">
+                <div class="w-14 h-14 flex-shrink-0">
+                    <img src="gambar/logo.png" alt="Creative Digital Logo" class="w-full h-full object-contain">
+                </div>
+                <div>
+                    <span class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Creative Digital</span>
+                    <span class="block text-xs text-gray-500">Studio Pencetakan</span>
+                </div>
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="font-medium text-gray-700 hover:text-blue-600 transition relative group">
+                    Beranda
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a href="tentangpkl.html" class="font-medium text-gray-700 hover:text-blue-600 transition relative group">
+                    Tentang Kami
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a href="layanankami.html" class="font-medium text-gray-700 hover:text-blue-600 transition relative group">
+                    Layanan
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a href="galeripkl.html" class="font-medium text-gray-700 hover:text-blue-600 transition relative group">
+                    Galeri
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a href="kontak.html" class="px-6 py-2 gradient-bg text-white font-medium rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    Kontak
+                </a>
+            </div>
+            
+            <button id="mobileMenuBtn" class="md:hidden text-gray-700 hover:text-blue-600 transition">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        
+        <div id="mobileMenu" class="hidden md:hidden mt-4 py-4 px-4 bg-white/95 backdrop-blur-lg rounded-2xl shadow-xl">
+            <div class="flex flex-col space-y-4">
+                <a href="index.html" class="font-medium text-gray-700 hover:text-blue-600 transition py-2 px-4 bg-blue-50/50 rounded-lg">Beranda</a>
+                <a href="tentangpkl.html" class="font-medium text-gray-700 hover:text-blue-600 transition py-2 px-4 hover:bg-blue-50/50 rounded-lg">Tentang Kami</a>
+                <a href="layanankami.html" class="font-medium text-gray-700 hover:text-blue-600 transition py-2 px-4 hover:bg-blue-50/50 rounded-lg">Layanan</a>
+                <a href="galeripkl.html" class="font-medium text-gray-700 hover:text-blue-600 transition py-2 px-4 hover:bg-blue-50/50 rounded-lg">Galeri</a>
+                <a href="kontak.html" class="px-4 py-2 gradient-bg text-white font-medium rounded-full text-center shadow-lg">Kontak</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative min-h-screen flex items-center overflow-hidden pt-20">
+        <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 relative z-10 py-20">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="animate-fadeInUp">
+                    <div class="inline-flex items-center space-x-2 mb-6 px-4 py-2 bg-blue-50 rounded-full">
+                        <span class="w-2 h-2 bg-blue-600 rounded-full"></span>
+                        <span class="text-sm font-medium text-blue-600">Studio Desain Modern</span>
+                    </div>
+                    
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+                        <span class="block text-gray-900">Kami membuat ruang</span>
+                        <span class="block gradient-text">interior lebih fungsional</span>
+                        <span class="block text-gray-900">dan modern</span>
+                    </h1>
+                    
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                        Studio kami menyediakan desain modern unik sesuai dengan evaluasi klien di atas. 
+                        Kami menciptakan setiap ruang yang membutuhkan sentuhan dan bagaimana mengelola tempat tinggal Anda.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <a href="layanankami.html" class="btn-glow px-8 py-4 gradient-bg text-white font-bold rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                            Jelajahi Layanan <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#process" class="px-8 py-4 border-2 border-gray-300 text-gray-700 font-bold rounded-full hover:border-blue-600 hover:text-blue-600 transition-all duration-300">
+                            <i class="fas fa-play-circle mr-2"></i> Tonton Proses
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="relative lg:h-[600px] animate-float-slow">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-100 to-purple-100 rounded-[40px] rotate-3"></div>
+                    <div class="relative rounded-[36px] overflow-hidden shadow-2xl h-full">
+                        <img src="gambar/logo2.jpeg" 
+                             alt="Desain Interior Modern" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    
+                    <div class="absolute -top-6 -left-6 glass-card p-6 rounded-2xl shadow-xl">
+                        <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center mb-2">
+                            <i class="fas fa-award text-white text-xl"></i>
+                        </div>
+                        <p class="text-sm font-bold text-gray-900">Pemenang Penghargaan</p>
+                        <p class="text-xs text-gray-500">Studio Desain 2024</p>
+                    </div>
+                    
+                    <div class="absolute -bottom-6 -right-6 glass-card p-6 rounded-2xl shadow-xl" style="animation-delay: 1s">
+                        <div class="text-3xl font-bold gradient-text">500+</div>
+                        <p class="text-sm font-bold text-gray-900">Proyek</p>
+                        <p class="text-xs text-gray-500">Selesai</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Mengapa Memilih Kami</h2>
+                <div class="w-24 h-1 gradient-bg rounded-full mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card-3d group cursor-pointer">
+                    <div class="card-3d-inner glass-card p-8 rounded-3xl hover-lift">
+                        <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform duration-300">
+                            <i class="fas fa-lightbulb text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Desain Inovatif</h3>
+                        <p class="text-gray-600 mb-6">Kami menggabungkan kreativitas dengan teknologi untuk menghadirkan desain unik dan fungsional yang menonjol.</p>
+                        <a href="#" class="inline-flex items-center text-blue-600 font-medium group">
+                            Pelajari lebih lanjut
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="card-3d group cursor-pointer">
+                    <div class="card-3d-inner glass-card p-8 rounded-3xl hover-lift">
+                        <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform duration-300">
+                            <i class="fas fa-bolt text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Proses Cepat</h3>
+                        <p class="text-gray-600 mb-6">Alur kerja yang efisien dan peralatan modern memastikan penyelesaian cepat tanpa mengorbankan kualitas.</p>
+                        <a href="#" class="inline-flex items-center text-blue-600 font-medium group">
+                            Pelajari lebih lanjut
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="card-3d group cursor-pointer">
+                    <div class="card-3d-inner glass-card p-8 rounded-3xl hover-lift">
+                        <div class="w-16 h-16 gradient-bg rounded-2xl flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform duration-300">
+                            <i class="fas fa-headset text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Dukungan Premium</h3>
+                        <p class="text-gray-600 mb-6">Dukungan pelanggan dan konsultasi 24/7 untuk memastikan visi Anda menjadi kenyataan dengan sempurna.</p>
+                        <a href="#" class="inline-flex items-center text-blue-600 font-medium group">
+                            Pelajari lebih lanjut
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="process" class="py-24 bg-gradient-to-b from-white to-gray-50">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Proses Kerja Kami</h2>
+                <p class="text-gray-600 text-lg">Wujudkan visi Anda menjadi nyata</p>
+            </div>
+            
+            <div class="relative">
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 gradient-bg hidden lg:block"></div>
+                
+                <div class="space-y-12 lg:space-y-24">
+                    <div class="relative flex flex-col lg:flex-row items-center">
+                        <div class="lg:w-1/2 lg:pr-12 mb-8 lg:mb-0 text-right">
+                            <div class="inline-flex items-center space-x-2 mb-4">
+                                <span class="w-8 h-8 gradient-bg text-white rounded-full flex items-center justify-center font-bold">01</span>
+                                <h3 class="text-2xl font-bold text-gray-900">Konsep</h3>
+                            </div>
+                            <p class="text-gray-600">Kami mulai dengan memahami visi Anda dan menciptakan konsep awal yang selaras dengan tujuan Anda.</p>
+                        </div>
+                        
+                        <div class="lg:w-1/2 lg:pl-12 relative">
+                            <div class="glass-card p-6 rounded-2xl">
+                                <div class="aspect-video rounded-xl overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1523726491678-bf852e717f6a?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGVzYWluJTIwa29uc2VwfGVufDB8fDB8fHww" 
+                                         alt="Desain Konsep" 
+                                         class="w-full h-full object-cover image-hover-effect">
+                                </div>
+                            </div>
+                            <div class="absolute -top-4 -left-4 w-12 h-12 gradient-bg rounded-xl flex items-center justify-center shadow-xl">
+                                <i class="fas fa-lightbulb text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative flex flex-col lg:flex-row items-center">
+                        <div class="lg:w-1/2 lg:pr-12 order-2 lg:order-1">
+                            <div class="glass-card p-6 rounded-2xl">
+                                <div class="aspect-video rounded-xl overflow-hidden">
+                                    <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGVyZW5jYW5hYW4lMjBwcm95ZWt8ZW58MHx8MHx8fDA%3D" 
+                                         alt="Perencanaan" 
+                                         class="w-full h-full object-cover image-hover-effect">
+                                </div>
+                            </div>
+                            <div class="absolute -top-4 -right-4 w-12 h-12 gradient-bg rounded-xl flex items-center justify-center shadow-xl">
+                                <i class="fas fa-clipboard-list text-white"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="lg:w-1/2 lg:pl-12 mb-8 lg:mb-0 order-1 lg:order-2 text-left">
+                            <div class="inline-flex items-center space-x-2 mb-4">
+                                <span class="w-8 h-8 gradient-bg text-white rounded-full flex items-center justify-center font-bold">02</span>
+                                <h3 class="text-2xl font-bold text-gray-900">Rencana</h3>
+                            </div>
+                            <p class="text-gray-600">Perencanaan dan pengembangan strategi yang detail untuk memastikan eksekusi yang lancar.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="glass-card p-6 rounded-2xl hover-lift">
+                            <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center mb-4">
+                                <span class="text-white font-bold">03</span>
+                            </div>
+                            <h4 class="text-xl font-bold mb-3">Desain</h4>
+                            <p class="text-gray-600 text-sm">Menciptakan desain detail dengan presisi dan kreativitas.</p>
+                        </div>
+                        
+                        <div class="glass-card p-6 rounded-2xl hover-lift">
+                            <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center mb-4">
+                                <span class="text-white font-bold">04</span>
+                            </div>
+                            <h4 class="text-xl font-bold mb-3">Bangun</h4>
+                            <p class="text-gray-600 text-sm">Eksekusi profesional dengan perhatian pada setiap detail.</p>
+                        </div>
+                        
+                        <div class="glass-card p-6 rounded-2xl hover-lift">
+                            <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center mb-4">
+                                <span class="text-white font-bold">05</span>
+                            </div>
+                            <h4 class="text-xl font-bold mb-3">Rilis</h4>
+                            <p class="text-gray-600 text-sm">Pengiriman akhir dan dukungan untuk implementasi yang sukses.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <section class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 gradient-bg opacity-10"></div>
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+        
+        <div class="max-w-4xl mx-auto px-6 md:px-12 relative z-10">
+            <div class="glass-card rounded-3xl p-8 md:p-12 text-center shadow-2xl">
+                <h2 class="text-4xl font-bold text-gray-900 mb-6">Dapatkan Konsultasi Gratis</h2>
+                <p class="text-gray-600 mb-8 text-lg">Mari diskusikan proyek Anda dan ciptakan sesuatu yang menakjubkan bersama.</p>
+                
+                <form class="max-w-2xl mx-auto">
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <input type="text" 
+                               placeholder="Nama Anda" 
+                               class="px-6 py-4 bg-white/80 border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition">
+                        <input type="email" 
+                               placeholder="Alamat Email" 
+                               class="px-6 py-4 bg-white/80 border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition">
+                    </div>
+                    <textarea 
+                        placeholder="Ceritakan tentang proyek Anda..." 
+                        rows="4"
+                        class="w-full px-6 py-4 bg-white/80 border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition mb-6"></textarea>
+                    
+                    <button type="submit" 
+                            class="btn-glow px-10 py-4 gradient-bg text-white font-bold rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+                        <i class="fas fa-paper-plane mr-2"></i> Kirim Permintaan
+                    </button>
+                </form>
+                
+                <p class="text-gray-500 text-sm mt-6">Kami akan menghubungi Anda dalam waktu 24 jam</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-8">Apa yang Kami Tawarkan</h2>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start space-x-4 group">
+                            <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-ruler-combined text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Desain Minimalis</h3>
+                                <p class="text-gray-600">Desain bersih dan fungsional yang berfokus pada kesederhanaan dan keanggunan.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4 group">
+                            <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-couch text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Perabotan Modern</h3>
+                                <p class="text-gray-600">Pilihan perabotan kontemporer yang melengkapi ruang modern.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4 group">
+                            <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-comments text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Layanan Konsultasi</h3>
+                                <p class="text-gray-600">Saran dan panduan ahli sepanjang perjalanan desain Anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="aspect-square rounded-[40px] overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Interior Modern" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    
+                    <div class="absolute -bottom-6 -right-6 glass-card p-6 rounded-2xl shadow-xl">
+                        <div class="flex items-center space-x-4">
+                            <div class="text-3xl font-bold gradient-text">98%</div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-900">Tingkat Kepuasan</p>
+                                <p class="text-xs text-gray-500">Klien</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-gradient-to-br from-gray-50 to-white">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-8">Hubungi Kami</h2>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-start space-x-4 group hover-lift p-6 glass-card rounded-2xl">
+                            <div class="w-14 h-14 gradient-bg rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-envelope text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2 text-gray-900">Email</h3>
+                                <a href="mailto:creativedigitalpemalang@gmail.com" 
+                                   class="text-gray-600 hover:text-blue-600 transition">
+                                    creativedigitalpemalang@gmail.com
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4 group hover-lift p-6 glass-card rounded-2xl">
+                            <div class="w-14 h-14 gradient-bg rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-phone text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2 text-gray-900">Telepon</h3>
+                                <a href="tel:+6281329620262" 
+                                   class="text-gray-600 hover:text-blue-600 transition">
+                                    0813-2962-0262
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-4 group hover-lift p-6 glass-card rounded-2xl">
+                            <div class="w-14 h-14 gradient-bg rounded-xl flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2 text-gray-900">Alamat</h3>
+                                <p class="text-gray-600">
+                                    Jl. Kh Ahmad Dahlan (Tugu Sirandu Kebarat), Pemalang<br>
+                                    Indonesia
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold mb-6">Ikuti Kami</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-14 h-14 gradient-bg text-white rounded-xl flex items-center justify-center text-xl hover:scale-110 transition-transform">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="w-14 h-14 gradient-bg text-white rounded-xl flex items-center justify-center text-xl hover:scale-110 transition-transform">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="w-14 h-14 gradient-bg text-white rounded-xl flex items-center justify-center text-xl hover:scale-110 transition-transform">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            <a href="#" class="w-14 h-14 gradient-bg text-white rounded-xl flex items-center justify-center text-xl hover:scale-110 transition-transform">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card rounded-2xl overflow-hidden h-64">
+                        <div class="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
+                            <div class="text-center">
+                                <i class="fas fa-map text-4xl text-gray-400 mb-4"></i>
+                                <p class="text-gray-600">Lokasi Peta</p>
+                                <p class="text-sm text-gray-500">Pemalang, Indonesia</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <a href="index.html" class="flex items-center space-x-3 mb-6">
+                        <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center">
+                            <i class="fas fa-palette text-white"></i>
+                        </div>
+                        <span class="text-xl font-bold">Creative Digital</span>
+                    </a>
+                    <p class="text-gray-400 text-sm">
+                        Studio desain modern yang berspesialisasi dalam ruang interior, pencetakan digital, dan solusi kreatif.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Tautan Cepat</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Beranda</a></li>
+                        <li><a href="tentangpkl.html" class="text-gray-400 hover:text-white transition">Tentang Kami</a></li>
+                        <li><a href="layanankami.html" class="text-gray-400 hover:text-white transition">Layanan</a></li>
+                        <li><a href="galeripkl.html" class="text-gray-400 hover:text-white transition">Galeri</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Layanan</h4>
+                    <ul class="space-y-3">
+                        <li class="text-gray-400">Pencetakan Digital</li>
+                        <li class="text-gray-400">Desain Interior</li>
+                        <li class="text-gray-400">Konsultasi Merek</li>
+                        <li class="text-gray-400">Solusi Kustom</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-6">Newsletter</h4>
+                    <p class="text-gray-400 text-sm mb-4">Berlangganan untuk pembaruan dan penawaran</p>
+                    <div class="flex">
+                        <input type="email" 
+                               placeholder="Email Anda" 
+                               class="px-4 py-3 bg-gray-800 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+                        <button class="px-4 gradient-bg rounded-r-lg">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-800 text-center">
+                <p class="text-gray-400">&copy; 2024 Creative Digital Printing. Semua hak dilindungi.</p>
+                <p class="text-gray-500 text-sm mt-2">Didesain dengan ❤️ untuk Solusi Digital Modern</p>
+            </div>
+        </div>
+    </footer>
+
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 gradient-bg text-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 hidden">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.remove('hidden');
+            } else {
+                backToTop.classList.add('hidden');
+            }
+        });
+        
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('animate-fadeInUp');
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all stagger items
+        document.querySelectorAll('.stagger-item').forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.2}s`;
+            observer.observe(item);
+        });
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add animation classes to initial elements
+            const initialAnimatedElements = document.querySelectorAll('.animate-fadeInUp');
+            initialAnimatedElements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.1}s`;
+            });
+            
+            // Animate process steps
+            const processSteps = document.querySelectorAll('.card-3d');
+            processSteps.forEach((step, index) => {
+                step.style.animationDelay = `${index * 0.2}s`;
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add hover effect to glass cards
+        const glassCards = document.querySelectorAll('.glass-card');
+        glassCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Parallax effect for floating elements
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const floatElements = document.querySelectorAll('.animate-float');
+            
+            floatElements.forEach((el, index) => {
+                const speed = 0.5 + (index * 0.1);
+                const yPos = -(scrolled * speed * 0.1);
+                el.style.transform = `translateY(${yPos}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
